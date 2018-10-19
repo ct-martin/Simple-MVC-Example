@@ -93,18 +93,15 @@ const searchName = (req, res) => {
       return res.json({ error: 'No dogs found' });
     }
 
+    const doc2 = doc;
+    doc2.age++;
+    const savePromise = doc2.save();
 
-    doc.age++;
-
-    const savePromise = doc.save();
-
-    savePromise.then(() => res.json({
-      name: doc.name,
-      age: doc.age,
-      breed: doc.breed,
-    }));
-
-    savePromise.catch(err => res.json({ err }));
+    return savePromise.then(() => res.json({
+      name: doc2.name,
+      age: doc2.age,
+      breed: doc2.breed,
+    })).catch(err2 => res.json({ err2 }));
   });
 };
 
